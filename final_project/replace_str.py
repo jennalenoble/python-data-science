@@ -24,7 +24,11 @@ def replace_str(data, col, str1, str2):
     Raises
     ------
     TypeError
+        If the input argument data is not of instance pd.DataFrame
+    TypeError
         If the input argument col is not of type str
+    Exception
+        If the input argument col does not exist in the dataframe
     TypeError
         If the input argument str1 is not of type str
     TypeError
@@ -40,13 +44,16 @@ def replace_str(data, col, str1, str2):
         raise TypeError("Please use a DataFrame for the data input parameter.")
 
     if type(col) is not str:
-        raise Exception("Please use a string for the col input parameter.")
+        raise TypeError("Please use a string for the col input parameter.")
+
+    if not col in data:
+        raise Exception("Input for col parameter does not exist in dataframe.")
 
     if type(str1) is not str:
-        raise Exception("Please use a string for the str1 input parameter.")
+        raise TypeError("Please use a string for the str1 input parameter.")
 
     if type(str2) is not str:
-        raise Exception("Please use a string for the str2 input parameter.")
+        raise TypeError("Please use a string for the str2 input parameter.")
 
     data[col] = data[col].str.replace(str1, str2, regex=True)
     return data
